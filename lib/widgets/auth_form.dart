@@ -2,6 +2,10 @@ import 'package:chat_flutter/models/auth_data.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
+  final void Function(AuthData authData) onSubmmit;
+
+  AuthForm(this.onSubmmit);
+
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -14,8 +18,7 @@ class _AuthFormState extends State<AuthForm> {
     bool isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
-      print(_authData.name);
-      print(_authData.email);
+      widget.onSubmmit(_authData);
     }
   }
 
@@ -32,6 +35,7 @@ class _AuthFormState extends State<AuthForm> {
               children: [
                 if (_authData.isSignUp)
                   TextFormField(
+                    key: ValueKey('name'),
                     decoration: InputDecoration(labelText: 'Name'),
                     onChanged: (value) => _authData.name = value,
                     validator: (value) {
@@ -41,6 +45,7 @@ class _AuthFormState extends State<AuthForm> {
                     },
                   ),
                 TextFormField(
+                  key: ValueKey('email'),
                   decoration: InputDecoration(labelText: 'Email'),
                   onChanged: (value) => _authData.email = value,
                   validator: (value) {
@@ -50,6 +55,7 @@ class _AuthFormState extends State<AuthForm> {
                   },
                 ),
                 TextFormField(
+                  key: ValueKey('pass'),
                   obscureText: true,
                   decoration: InputDecoration(labelText: 'Password'),
                   onChanged: (value) => _authData.password = value,
@@ -66,7 +72,9 @@ class _AuthFormState extends State<AuthForm> {
                 ),
                 FlatButton(
                   textColor: Theme.of(context).primaryColor,
-                  child: Text('Create Account'),
+                  child: Text(
+                    _authData.isLogin ? 'Create Account' : 'Already Logged?',
+                  ),
                   onPressed: () {
                     setState(() {
                       _authData.toogleMode();
