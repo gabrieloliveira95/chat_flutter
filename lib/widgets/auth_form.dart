@@ -52,6 +52,9 @@ class _AuthFormState extends State<AuthForm> {
                 if (_authData.isSignUp) UserImagePicker(_handlePickedImage),
                 if (_authData.isSignUp)
                   TextFormField(
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.words,
+                    enableSuggestions: false,
                     key: ValueKey('name'),
                     decoration: InputDecoration(labelText: 'Name'),
                     onChanged: (value) => _authData.name = value,
@@ -62,6 +65,9 @@ class _AuthFormState extends State<AuthForm> {
                     },
                   ),
                 TextFormField(
+                  autocorrect: false,
+                  textCapitalization: TextCapitalization.none,
+                  enableSuggestions: false,
                   key: ValueKey('email'),
                   decoration: InputDecoration(labelText: 'Email'),
                   onChanged: (value) => _authData.email = value,
